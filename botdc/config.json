@@ -1,0 +1,31 @@
+{
+  "colors": {
+    "gold": "#FFD700",
+    "black": "#000000",
+    "success": "#00FF00",
+    "error": "#FF0000"
+  },
+  "branding": {
+    "name": "Hero Client",
+    "footer": "Powered by Hero Client Services",
+    "icon": "https://i.imgur.com/example_gold_hero_logo.png"
+  },
+  "roles": {
+    "support": "1471015355689472184",
+    "client": "1456675114606133270",
+    "admin": [
+      "1445130578386096260",
+      "1471013553795498077"
+    ]
+  },
+  "channels": {
+    "ticketPanel": "1445432377672335411",
+    "transcripts": "1471023171690959043",
+    "reviews": "1457101135532916962"
+  },
+  "categories": {
+    "buy": "buy",
+    "support": "support",
+    "resethwid": "1471015268883894415"
+  }
+}

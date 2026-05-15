@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Terms of Service | Hero Client</title>
+    <link rel="icon" type="image/x-icon" href="favicon.png">
+
+    <!-- Embedded CSS for Independence -->
+    <style>
+        /* Hero Client - Gold & Black Premium Design */
+        @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
+
+        :root {
+            --primary: #FFD700;
+            /* Gold */
+            --primary-glow: rgba(255, 215, 0, 0.5);
+            --secondary: #B8860B;
+            /* Dark Goldenrod */
+            --bg-dark: #050505;
+            /* Deep Black */
+            --card-bg: rgba(20, 20, 20, 0.8);
+            --glass-border: rgba(255, 215, 0, 0.15);
+            --text: #ffffff;
+            --text-dim: #d4d4d4;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text);
+            overflow-x: hidden;
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+
+        /* --- Animated Deep Space Background --- */
+        .bg-fixed {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            background-color: var(--bg-dark);
+            overflow: hidden;
+        }
+
+        .blob {
+            position: absolute;
+            filter: blur(80px);
+            opacity: 0.3;
+            animation: blobFloat 25s infinite alternate ease-in-out;
+        }
+
+        .blob-1 {
+            top: -10%;
+            left: -10%;
+            width: 50vw;
+            height: 50vh;
+            background: radial-gradient(circle, rgba(255, 215, 0, 0.3) 0%, transparent 70%);
+        }
+
+        .blob-2 {
+            bottom: -10%;
+            right: -10%;
+            width: 60vw;
+            height: 60vh;
+            background: radial-gradient(circle, rgba(184, 134, 11, 0.3) 0%, transparent 70%);
+            animation-delay: -5s;
+        }
+
+        @keyframes blobFloat {
+            0% {
+                transform: translate(0, 0) scale(1);
+            }
+
+            33% {
+                transform: translate(30px, -50px) scale(1.1);
+            }
+
+            66% {
+                transform: translate(-20px, 20px) scale(0.9);
+            }
+
+            100% {
+                transform: translate(0, 0) scale(1);
+            }
+        }
+
+        #particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        /* --- Navigation --- */
+        .nav-container {
+            position: fixed;
+            top: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1000;
+            width: 90%;
+            max-width: 1100px;
+        }
+
+        .nav-capsule {
+            width: 100%;
+            background: rgba(10, 10, 10, 0.85);
+            backdrop-filter: blur(16px);
+            border: 1px solid var(--glass-border);
+            border-radius: 100px;
+            padding: 0.8rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.8);
+        }
+
+        .nav-logo {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            font-weight: 700;
+            font-size: 1.5rem;
+            letter-spacing: 1px;
+            color: var(--primary);
+            text-shadow: 0 0 10px var(--primary-glow);
+            text-decoration: none;
+        }
+
+        .btn-nav {
+            background: var(--primary);
+            color: #000;
+            padding: 0.6rem 1.4rem;
+            border-radius: 100px;
+            font-weight: 700;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 15px var(--primary-glow);
+        }
+
+        .btn-nav:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 25px var(--primary-glow);
+            background: #fff;
+        }
+
+        /* --- Content Section --- */
+        .tos-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 10rem 2rem 5rem;
+            position: relative;
+        }
+
+        .tos-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .tos-header h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #fff 0%, var(--primary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 1rem;
+        }
+
+        .tos-card {
+            background: var(--card-bg);
+            border: 1px solid var(--glass-border);
+            padding: 3rem;
+            border-radius: 24px;
+            backdrop-filter: blur(20px);
+            margin-bottom: 2rem;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+            animation: fadeInUp 0.5s ease backwards;
+        }
+
+        .tos-section {
+            margin-bottom: 2.5rem;
+        }
+
+        .tos-section h2 {
+            font-size: 1.5rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .tos-section span {
+            font-size: 0.9rem;
+            background: rgba(255, 215, 0, 0.1);
+            color: var(--primary);
+            padding: 0.2rem 0.6rem;
+            border-radius: 6px;
+            border: 1px solid rgba(255, 215, 0, 0.2);
+        }
+
+        .tos-section p {
+            color: var(--text-dim);
+            margin-bottom: 1rem;
+        }
+
+        .tos-section ul {
+            list-style: none;
+            padding-left: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .tos-section li {
+            color: var(--text-dim);
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 0.8rem;
+        }
+
+        .tos-section li::before {
+            content: "•";
+            color: var(--primary);
+            font-weight: bold;
+        }
+
+        .footer {
+            text-align: center;
+            color: var(--text-dim);
+            font-size: 0.9rem;
+            margin-top: 3rem;
+            border-top: 1px solid var(--glass-border);
+            padding-top: 2rem;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+    <div class="bg-fixed">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+    </div>
+    <div id="particles"></div>
+
+    <div class="nav-container">
+        <nav class="nav-capsule">
+            <a href="./" class="nav-logo">
+                <i class="fa-solid fa-bolt"></i> HERO
+            </a>
+            <a href="login.html" class="btn-nav">Login</a>
+        </nav>
+    </div>
+
+    <div class="tos-container">
+        <div class="tos-header">
+            <h1>Terms of Service</h1>
+            <p style="color: var(--text-dim);">Last updated: February 2026</p>
+        </div>
+
+        <div class="tos-card">
+            <div class="tos-section">
+                <h2><span>01</span> Introduction</h2>
+                <p>These Terms of Service ("Terms") constitute a legally binding agreement between you ("User") and Hero
+                    Client ("we", "us", or "our"). By accessing or using our software, website, and related services,
+                    you acknowledge that you have read, understood, and agree to be bound by these Terms.</p>
+            </div>
+
+            <div class="tos-section">
+                <h2><span>02</span> License Grant</h2>
+                <p>We grant you a personal, non-exclusive, non-transferable, and revocable license to use Hero Client
+                    solely for your private, non-commercial Minecraft gameplay. This license is tied to your account and
+                    hardware via HWID.</p>
+            </div>
+
+            <div class="tos-section">
+                <h2><span>03</span> Usage Restrictions</h2>
+                <p>To maintain the integrity of our software, you are strictly prohibited from:</p>
+                <ul>
+                    <li>Sharing, reselling, or distributing your license key or account access.</li>
+                    <li>Attempting to reverse-engineer, decompile, or modify any portion of Hero Client.</li>
+                    <li>Bypassing security protocols, authentication systems, or HWID protections.</li>
+                    <li>Distributing "cracks" or unauthorized versions of our software.</li>
+                </ul>
+            </div>
+
+            <div class="tos-section">
+                <h2><span>04</span> Account Responsibility</h2>
+                <p>You are solely responsible for maintaining the confidentiality of your account credentials. Any
+                    violation of these Terms traced back to your license will be considered your direct responsibility,
+                    regardless of who was using the software at the time.</p>
+            </div>
+
+            <div class="tos-section">
+                <h2><span>05</span> Acceptable Conduct</h2>
+                <p>You agree not to use Hero Client for any illegal activities, targeted harassment, or malicious
+                    disruption of server networks. Users must also comply with the Discord Community Guidelines and any
+                    applicable local laws.</p>
+            </div>
+
+            <div class="tos-section">
+                <h2><span>06</span> Privacy & Hardware Data</h2>
+                <p>Efficiency and security are our priorities. Here is how we handle your data:</p>
+                <ul>
+                    <li><strong>HWID Collection:</strong> We collect hardware identifiers to prevent license sharing and
+                        ensure software security.</li>
+                    <li><strong>Payment Data:</strong> We do not store credit card info. All transactions are securely
+                        processed by third-party providers.</li>
+                    <li><strong>Service Logs:</strong> Anonymous crash reports and stability data may be collected to
+                        improve Hero Client performance.</li>
+                    <li><strong>Data Integrity:</strong> We never sell, trade, or distribute your data to third parties.
+                    </li>
+                </ul>
+            </div>
+
+            <div class="tos-section">
+                <h2><span>07</span> Updates & Availability</h2>
+                <p>Hero Client is dynamic. We reserve the right to modify, update, or temporarily suspend services for
+                    maintenance or improvements at any time. We do not guarantee permanent availability of all features.
+                </p>
+            </div>
+
+            <div class="tos-section">
+                <h2><span>08</span> Termination of Service</h2>
+                <p>Violation of any part of these Terms, specifically those regarding <strong>Hate Speech</strong>,
+                    <strong>Reverse Engineering</strong>, or <strong>License Sharing</strong>, will result in the
+                    immediate and permanent termination of your software license without refund.
+                </p>
+            </div>
+
+            <div class="tos-section">
+                <h2><span>09</span> Disclaimer of Warranty</h2>
+                <p>Hero Client is provided "as is" and "as available". We are not liable for any game bans, hardware
+                    issues, or data loss resulting from the use of our software. Use at your own risk.</p>
+            </div>
+
+            <div class="tos-section">
+                <h2><span>10</span> Modifications</h2>
+                <p>We reserve the right to update these Terms at any time. Your continued use of Hero Client following
+                    any changes constitutes your acceptance of the new Terms.</p>
+            </div>
+
+            <div style="margin-top: 3rem; text-align: center;">
+                <a href="./" class="btn-nav"
+                    style="background: transparent; border: 1px solid var(--primary); color: var(--primary);">
+                    <i class="fa-solid fa-arrow-left"></i> Back to Home
+                </a>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>&copy; 2026 Hero Client. All rights reserved.</p>
+        </div>
+    </div>
+
+    <script src="js/main.js"></script>
+</body>
+
+</html>

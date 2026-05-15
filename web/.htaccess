@@ -1,0 +1,14 @@
+RewriteEngine On
+RewriteBase /
+
+# 1. Remove .html extension from URL (External Redirect)
+RewriteCond %{THE_REQUEST} \s/+(.+?)\.html[\s?] [NC]
+RewriteRule ^ /%1 [R=301,L]
+
+# 2. Add .html extension internally (Internal Rewrite)
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME}.html -f
+RewriteRule ^([^\.]+)$ $1.html [NC,L]
+
+# 3. Redirect 404 to Homepage
+ErrorDocument 404 /index.html

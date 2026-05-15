@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Store | Hero Client</title>
+    <link rel="icon" type="image/x-icon" href="favicon.png">
+
+    <!-- Embedded CSS for Independence -->
+    <style>
+        /* Hero Client - Gold & Black Premium Design */
+        @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
+
+        :root {
+            --primary: #FFD700;
+            /* Gold */
+            --primary-glow: rgba(255, 215, 0, 0.5);
+            --secondary: #B8860B;
+            /* Dark Goldenrod */
+            --bg-dark: #050505;
+            /* Deep Black */
+            --card-bg: rgba(20, 20, 20, 0.8);
+            --glass-border: rgba(255, 215, 0, 0.15);
+            --text: #ffffff;
+            --text-dim: #d4d4d4;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text);
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        /* --- Animated Deep Space Background --- */
+        .bg-fixed {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            background-color: var(--bg-dark);
+            overflow: hidden;
+        }
+
+        .blob {
+            position: absolute;
+            filter: blur(80px);
+            opacity: 0.3;
+            animation: blobFloat 25s infinite alternate ease-in-out;
+        }
+
+        .blob-1 {
+            top: -10%;
+            left: -10%;
+            width: 50vw;
+            height: 50vh;
+            background: radial-gradient(circle, rgba(255, 215, 0, 0.3) 0%, transparent 70%);
+        }
+
+        .blob-2 {
+            bottom: -10%;
+            right: -10%;
+            width: 60vw;
+            height: 60vh;
+            background: radial-gradient(circle, rgba(184, 134, 11, 0.3) 0%, transparent 70%);
+            animation-delay: -5s;
+        }
+
+        @keyframes blobFloat {
+            0% {
+                transform: translate(0, 0) scale(1);
+            }
+
+            33% {
+                transform: translate(30px, -50px) scale(1.1);
+            }
+
+            66% {
+                transform: translate(-20px, 20px) scale(0.9);
+            }
+
+            100% {
+                transform: translate(0, 0) scale(1);
+            }
+        }
+
+        #particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        /* --- Navigation --- */
+        .nav-container {
+            position: fixed;
+            top: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1000;
+            width: 90%;
+            max-width: 1100px;
+        }
+
+        .nav-capsule {
+            width: 100%;
+            background: rgba(10, 10, 10, 0.85);
+            backdrop-filter: blur(16px);
+            border: 1px solid var(--glass-border);
+            border-radius: 100px;
+            padding: 0.8rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.8);
+            transition: all 0.3s ease;
+        }
+
+        .nav-logo {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            font-weight: 700;
+            font-size: 1.5rem;
+            letter-spacing: 1px;
+            color: var(--primary);
+            text-shadow: 0 0 10px var(--primary-glow);
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .btn-nav {
+            background: var(--primary);
+            color: #000;
+            padding: 0.6rem 1.4rem;
+            border-radius: 100px;
+            font-weight: 700;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 15px var(--primary-glow);
+        }
+
+        .btn-nav:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 25px var(--primary-glow);
+            background: #fff;
+        }
+
+        /* --- Pricing Headers --- */
+        .pricing-header {
+            text-align: center;
+            margin-top: 10rem;
+            margin-bottom: 4rem;
+        }
+
+        .pricing-tag {
+            background: rgba(255, 215, 0, 0.1);
+            color: var(--primary);
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            display: inline-block;
+            border: 1px solid var(--primary);
+        }
+
+        .hero-title {
+            font-size: 3.5rem;
+            font-weight: 700;
+            line-height: 1.1;
+            color: white;
+            margin-bottom: 1rem;
+        }
+
+        .hero-title span {
+            background: linear-gradient(135deg, var(--primary) 0%, #fff 100%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 30px rgba(255, 215, 0, 0.3);
+        }
+
+        /* --- Grid & Cards --- */
+        .grid {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 2rem;
+            padding: 0 2rem;
+            flex-wrap: wrap;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border: 1px solid var(--glass-border);
+            padding: 3rem;
+            border-radius: 24px;
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.2s;
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .featured {
+            border: 2px solid var(--primary);
+            transform: scale(1.05);
+            box-shadow: 0 0 40px rgba(255, 215, 0, 0.2);
+        }
+
+        .card-icon {
+            width: 60px;
+            height: 60px;
+            background: rgba(255, 215, 0, 0.1);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            border: 1px solid var(--glass-border);
+        }
+
+        .card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            font-weight: 600;
+            color: white;
+        }
+
+        .price {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin: 1.5rem 0;
+            color: white;
+        }
+
+        .price span {
+            font-size: 1rem;
+            color: var(--text-dim);
+            font-weight: 400;
+        }
+
+        .price-features {
+            list-style: none;
+            text-align: left;
+            margin: 2rem 0;
+        }
+
+        .price-features li {
+            margin-bottom: 1rem;
+            color: var(--text-dim);
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .price-features li i {
+            color: var(--primary);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: black;
+            padding: 1rem 2rem;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 30px var(--primary-glow);
+            border: none;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 0 50px var(--primary-glow);
+            filter: brightness(1.2);
+        }
+
+        /* --- Payment Modal --- */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(8px);
+            z-index: 2000;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+            opacity: 1;
+        }
+
+        .modal {
+            background: #111;
+            border: 1px solid var(--primary);
+            padding: 2.5rem;
+            border-radius: 24px;
+            width: 90%;
+            max-width: 500px;
+            text-align: center;
+            position: relative;
+            box-shadow: 0 0 50px rgba(255, 215, 0, 0.2);
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: none;
+            border: none;
+            color: var(--text-dim);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        .close-modal:hover {
+            color: white;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .nav-capsule {
+                padding: 0.8rem 1.5rem;
+            }
+
+            .nav-container {
+                top: 1rem;
+                width: 95%;
+            }
+
+            .featured {
+                transform: scale(1);
+                margin: 2rem 0;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+    <div class="bg-fixed">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+    </div>
+    <div id="particles"></div>
+
+    <div class="nav-container">
+        <nav class="nav-capsule">
+            <a href="./" class="nav-logo">
+                <i class="fa-solid fa-bolt"></i> HERO
+            </a>
+            <a href="login.html" class="btn-nav" id="clientAreaBtn">Login</a>
+        </nav>
+    </div>
+
+    <!-- Pricing Header -->
+    <div class="pricing-header">
+        <span class="pricing-tag">Unlock Full Potential</span>
+        <h1 class="hero-title">Choose Your<br><span>Dominance.</span></h1>
+    </div>
+
+    <!-- Pricing Grid -->
+    <div class="grid">
+        <!-- 1 Month Plan -->
+        <div class="card tilt-element">
+            <div class="card-icon"><i class="fa-regular fa-calendar-check"></i></div>
+            <h3>1 Month</h3>
+            <div class="price">10€ <span>/ month</span></div>
+            <p>Perfect for testing the waters.</p>
+
+            <ul class="price-features">
+                <li><i class="fa-solid fa-check"></i> <strong>30 Days Access</strong></li>
+                <li><i class="fa-solid fa-check"></i> All Modules</li>
+                <li><i class="fa-solid fa-check"></i> Standard Support</li>
+                <li><i class="fa-solid fa-check"></i> Private Discord Access</li>
+            </ul>
+
+            <button onclick="openPaymentModal('1_month')" class="btn-nav"
+                style="width: 100%; justify-content: center; margin-top: 1rem; cursor: pointer; border: 1px solid var(--primary); color: var(--primary); background: transparent;">
+                Purchase 1 Month <i class="fa-solid fa-arrow-right" style="margin-left: 8px;"></i>
+            </button>
+        </div>
+
+        <!-- Lifetime Plan -->
+        <div class="card featured tilt-element">
+            <div class="card-icon" style="background: var(--primary); color: black;"><i
+                    class="fa-solid fa-infinity"></i></div>
+            <h3>Lifetime</h3>
+            <div class="price">20€ <span>/ one-time</span></div>
+            <p>Own Hero forever. Best value.</p>
+
+            <ul class="price-features">
+                <li><i class="fa-solid fa-check"></i> <strong>Lifetime Access</strong></li>
+                <li><i class="fa-solid fa-check"></i> All Modules & Future Updates</li>
+                <li><i class="fa-solid fa-check"></i> Priority Support</li>
+                <li><i class="fa-solid fa-check"></i> <span style="color: var(--primary);">Gold</span> Discord Role</li>
+            </ul>
+
+            <button onclick="openPaymentModal('lifetime')" class="btn-primary">
+                Purchase Lifetime <i class="fa-solid fa-crown"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- Payment Modal -->
+    <div class="modal-overlay" id="paymentModal">
+        <div class="modal">
+            <button class="close-modal" onclick="closePaymentModal()">&times;</button>
+            <h2 style="color: white; margin-bottom: 2rem;">Select Payment Method</h2>
+
+            <div style="display: grid; gap: 1rem;">
+                <button class="btn-nav"
+                    style="width: 100%; justify-content: center; background: #5865F2; color: white; border: none;">
+                    <i class="fa-brands fa-stripe"></i> Pay with Stripe
+                </button>
+                <button class="btn-nav"
+                    style="width: 100%; justify-content: center; background: #F7931A; color: white; border: none;">
+                    <i class="fa-brands fa-bitcoin"></i> Pay with Crypto
+                </button>
+                <button class="btn-nav"
+                    style="width: 100%; justify-content: center; background: #0070BA; color: white; border: none;">
+                    <i class="fa-brands fa-paypal"></i> Pay with PayPal
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/main.js"></script>
+    <script>
+        // Check Login Status
+        document.addEventListener('DOMContentLoaded', () => {
+            const loggedIn = localStorage.getItem('hero_logged_in') || sessionStorage.getItem('hero_logged_in');
+            const btn = document.getElementById('clientAreaBtn');
+
+            if (loggedIn && btn) {
+                btn.textContent = 'Dashboard';
+                btn.href = 'dashboard.html';
+            }
+        });
+
+        function openPaymentModal(plan) {
+            document.getElementById('paymentModal').classList.add('active');
+            console.log('Selected plan:', plan);
+        }
+
+        function closePaymentModal() {
+            document.getElementById('paymentModal').classList.remove('active');
+        }
+
+        // Close modal when clicking outside
+        document.getElementById('paymentModal').addEventListener('click', (e) => {
+            if (e.target === document.getElementById('paymentModal')) {
+                closePaymentModal();
+            }
+        });
+    </script>
+</body>
+
+</html>

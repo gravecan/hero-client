@@ -1,0 +1,1566 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard | Hero Client</title>
+    <link rel="icon" type="image/x-icon" href="favicon.png">
+
+    <!-- Embedded CSS for Independence -->
+    <style>
+        /* Hero Client - Gold & Black Premium Design */
+        @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
+
+        :root {
+            --primary: #FFD700;
+            /* Gold */
+            --primary-glow: rgba(255, 215, 0, 0.5);
+            --secondary: #B8860B;
+            /* Dark Goldenrod */
+            --bg-dark: #050505;
+            /* Deep Black */
+            --card-bg: rgba(20, 20, 20, 0.8);
+            --glass-border: rgba(255, 215, 0, 0.15);
+            --text: #ffffff;
+            --text-dim: #d4d4d4;
+            --success: #4ade80;
+            --danger: #ef4444;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text);
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        /* --- Animated Deep Space Background --- */
+        .bg-fixed {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            background-color: var(--bg-dark);
+            overflow: hidden;
+        }
+
+        .blob {
+            position: absolute;
+            filter: blur(80px);
+            opacity: 0.3;
+            animation: blobFloat 25s infinite alternate ease-in-out;
+        }
+
+        .blob-1 {
+            top: -10%;
+            left: -10%;
+            width: 50vw;
+            height: 50vh;
+            background: radial-gradient(circle, rgba(255, 215, 0, 0.3) 0%, transparent 70%);
+            animation-delay: 0s;
+        }
+
+        .blob-2 {
+            bottom: -10%;
+            right: -10%;
+            width: 60vw;
+            height: 60vh;
+            background: radial-gradient(circle, rgba(184, 134, 11, 0.3) 0%, transparent 70%);
+            animation-delay: -5s;
+        }
+
+        .blob-3 {
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 40vw;
+            height: 40vh;
+            background: radial-gradient(circle, rgba(218, 165, 32, 0.2) 0%, transparent 70%);
+            animation-delay: -10s;
+        }
+
+        @keyframes blobFloat {
+            0% {
+                transform: translate(0, 0) scale(1);
+            }
+
+            33% {
+                transform: translate(30px, -50px) scale(1.1);
+            }
+
+            66% {
+                transform: translate(-20px, 20px) scale(0.9);
+            }
+
+            100% {
+                transform: translate(0, 0) scale(1);
+            }
+        }
+
+        /* Stars */
+        #particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        /* --- Dashboard Layout --- */
+        .layout-container {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 250px;
+            background: rgba(10, 10, 10, 0.9);
+            border-right: 1px solid var(--glass-border);
+            padding: 2rem 1.5rem;
+            display: flex;
+            flex-direction: column;
+            position: fixed;
+            height: 100vh;
+            left: 0;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(16px);
+            transition: transform 0.3s ease;
+        }
+
+        .sidebar-header {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            margin-bottom: 3rem;
+            color: var(--primary);
+            font-size: 1.5rem;
+            font-weight: 700;
+            text-decoration: none;
+        }
+
+        .sidebar-menu {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            flex-grow: 1;
+        }
+
+        .menu-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 0.8rem 1rem;
+            background: transparent;
+            color: var(--text-dim);
+            text-decoration: none;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .menu-item:hover,
+        .menu-item.active {
+            background: rgba(255, 215, 0, 0.1);
+            color: var(--primary);
+            box-shadow: 0 0 15px rgba(255, 215, 0, 0.1);
+        }
+
+        .menu-item i {
+            width: 20px;
+            text-align: center;
+        }
+
+        .sidebar-footer {
+            border-top: 1px solid var(--glass-border);
+            padding-top: 1.5rem;
+        }
+
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            margin-bottom: 1rem;
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            background: var(--primary);
+            color: black;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+        }
+
+        .user-info h4 {
+            font-size: 0.9rem;
+            margin-bottom: 0.2rem;
+        }
+
+        .user-info p {
+            font-size: 0.75rem;
+            color: var(--text-dim);
+        }
+
+        .btn-logout {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--glass-border);
+            color: var(--text-dim);
+            padding: 0.8rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .btn-logout:hover {
+            background: rgba(239, 68, 68, 0.1);
+            border-color: rgba(239, 68, 68, 0.3);
+            color: var(--danger);
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-left: 250px;
+            flex-grow: 1;
+            padding: 2rem 3rem;
+            width: calc(100% - 250px);
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 3rem;
+        }
+
+        .welcome-text h1 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .welcome-text p {
+            color: var(--text-dim);
+        }
+
+        /* Cards Grid */
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .content-card {
+            background: var(--card-bg);
+            border: 1px solid var(--glass-border);
+            padding: 2rem;
+            border-radius: 20px;
+            backdrop-filter: blur(20px);
+            transition: transform 0.3s ease;
+        }
+
+        .content-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1.5rem;
+        }
+
+        .card-icon {
+            width: 50px;
+            height: 50px;
+            background: rgba(255, 215, 0, 0.1);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            font-size: 1.5rem;
+        }
+
+        .card-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+            margin: 0.5rem 0;
+            background: linear-gradient(to right, #fff, #ccc);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .stat-active {
+            color: var(--success);
+            background: none;
+            -webkit-text-fill-color: var(--success);
+        }
+
+        .btn-action {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--glass-border);
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border-radius: 10px;
+            text-decoration: none;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .btn-action:hover {
+            background: rgba(255, 215, 0, 0.1);
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        /* Form elements for redeem */
+        .form-input {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--glass-border);
+            padding: 0.8rem;
+            border-radius: 8px;
+            color: white;
+            width: 100%;
+            margin-bottom: 1rem;
+        }
+
+        /* Mobile */
+        .mobile-menu-btn {
+            display: none;
+            position: fixed;
+            top: 1rem;
+            right: 1rem;
+            z-index: 1001;
+            background: var(--card-bg);
+            border: 1px solid var(--glass-border);
+            color: white;
+            padding: 0.5rem;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        @media (max-width: 900px) {
+            .sidebar {
+                transform: translateX(-100%);
+            }
+
+            .sidebar.show {
+                transform: translateX(0);
+            }
+
+            .main-content {
+                margin-left: 0;
+                width: 100%;
+                padding: 1.5rem;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+        }
+
+        /* --- News & Updates Grid --- */
+        .news-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        @media (max-width: 900px) {
+            .news-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .news-card {
+            background: var(--card-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            overflow: hidden;
+            margin-bottom: 1.5rem;
+            transition: transform 0.3s ease;
+        }
+
+        .news-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .news-image {
+            width: 100%;
+            height: 140px;
+            background: linear-gradient(135deg, #1a1a1a, #000);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .news-image::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at center, rgba(255, 215, 0, 0.1), transparent 70%);
+        }
+
+        .news-content {
+            padding: 1.5rem;
+        }
+
+        .news-date {
+            font-size: 0.75rem;
+            color: var(--text-dim);
+            margin-bottom: 0.5rem;
+            display: block;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .update-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .update-card {
+            background: rgba(255, 255, 255, 0.02);
+            border-left: 2px solid var(--primary);
+            padding: 1rem;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .update-version {
+            color: var(--primary);
+            font-weight: 700;
+            font-size: 0.9rem;
+            margin-bottom: 0.3rem;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .update-date {
+            font-weight: 400;
+            font-size: 0.75rem;
+            color: var(--text-dim);
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+
+    <div class="bg-fixed">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+    </div>
+    <div id="particles"></div>
+
+    <button class="mobile-menu-btn" onclick="document.querySelector('.sidebar').classList.toggle('show')">
+        <i class="fa-solid fa-bars"></i>
+    </button>
+
+    <div class="layout-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <a href="./" class="sidebar-header">
+                <i class="fa-solid fa-bolt"></i> HERO
+            </a>
+
+            <div class="sidebar-menu">
+                <a href="#" class="menu-item active" onclick="switchView('overview', this); return false;">
+                    <i class="fa-solid fa-house"></i> Overview
+                </a>
+                <a href="#" class="menu-item" onclick="switchView('announcements', this); return false;">
+                    <i class="fa-solid fa-bullhorn"></i> Announcements
+                </a>
+                <a href="buy.html" class="menu-item">
+                    <i class="fa-solid fa-cart-shopping"></i> Purchase
+                </a>
+            </div>
+
+            <!-- Premium Menu (Hidden by default) -->
+            <div id="premiumMenu" class="sidebar-menu"
+                style="display: none; margin-top: 1rem; border-top: 1px solid var(--glass-border); padding-top: 1rem;">
+                <h3
+                    style="padding: 0 1rem; font-size: 0.75rem; text-transform: uppercase; color: var(--primary); margin-bottom: 0.5rem; letter-spacing: 1px;">
+                    Premium</h3>
+                <a href="#" class="menu-item" onclick="switchView('web-gui', this); return false;">
+                    <i class="fa-solid fa-gamepad"></i> Web Gui
+                </a>
+                <a href="#" class="menu-item" onclick="switchView('config-browser', this); return false;">
+                    <i class="fa-regular fa-folder-open"></i> Config Browser
+                </a>
+                <a href="#" class="menu-item" onclick="switchView('download', this); return false;">
+                    <i class="fa-brands fa-windows"></i> Download Hero
+                </a>
+            </div>
+
+            <div class="sidebar-footer">
+                <div class="user-profile">
+                    <div class="user-avatar" id="avatarInitials">HC</div>
+                    <div class="user-info">
+                        <h4 id="headerUsername">User</h4>
+                        <p id="sidebarPlan">Free User</p>
+                    </div>
+                </div>
+                <!-- Updated Logout Script -->
+                <button class="btn-logout" onclick="logout()">
+                    <i class="fa-solid fa-right-from-bracket"></i> Sign Out
+                </button>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <div class="header">
+                <div class="welcome-text">
+                    <h1 id="welcomeUser">Welcome back, Hero</h1>
+                    <p>Manage your subscription and client settings.</p>
+                </div>
+                <!-- Future notification bell could go here -->
+            </div>
+
+            <!-- OVERVIEW VIEW -->
+            <div id="view-overview" class="view-section">
+                <!-- Stats Grid -->
+                <div class="grid-container">
+                    <!-- License Status -->
+                    <div class="content-card">
+                        <div class="card-header">
+                            <div class="card-icon">
+                                <i class="fa-solid fa-shield-halved"></i>
+                            </div>
+                        </div>
+                        <h3 style="color: var(--text-dim); font-size: 0.9rem;">License Status</h3>
+                        <div class="stat-value" id="licenseStatus">Checking...</div>
+                        <p style="color: var(--text-dim); font-size: 0.8rem;">Hero Client - Release 1.0</p>
+                    </div>
+
+                    <!-- Cloud Configs -->
+                    <div class="content-card">
+                        <div class="card-header">
+                            <div class="card-icon">
+                                <i class="fa-solid fa-cloud-arrow-up"></i>
+                            </div>
+                        </div>
+                        <h3 style="color: var(--text-dim); font-size: 0.9rem;">Cloud Configs</h3>
+                        <div class="stat-value">0</div>
+                        <p style="color: var(--text-dim); font-size: 0.8rem;">Saved configurations</p>
+                    </div>
+                </div>
+
+                <!-- Quick Actions -->
+                <h2 style="margin-bottom: 1.5rem;">Quick Actions</h2>
+                <div class="grid-container">
+                    <div class="content-card">
+                        <div class="card-header">
+                            <h3 class="card-title">Account Security</h3>
+                        </div>
+                        <p style="color: var(--text-dim); margin-bottom: 1.5rem;">Join our community for support and
+                            updates.</p>
+                        <a href="https://discord.gg/5nsFmXWFJE" target="_blank" class="btn-action"
+                            style="width: 100%; text-align: center;"><i class="fa-brands fa-discord"></i> Join
+                            Discord</a>
+
+                        <!-- Discord Linking Section -->
+                        <div id="discordLinkContainer" style="margin-top: 1rem;">
+                            <!-- Will be populated by JS -->
+                        </div>
+                    </div>
+                </div>
+                <!-- Redeem Key -->
+                <div class="content-card">
+                    <div class="card-header">
+                        <h3 class="card-title">Redeem License</h3>
+                    </div>
+                    <div style="display: flex; gap: 1rem;">
+                        <input type="text" id="redeemInput" placeholder="XXXX-XXXX-XXXX-XXXX" class="form-input"
+                            style="margin-bottom: 0;">
+                        <button id="redeemBtn" class="btn-action">Redeem</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ANNOUNCEMENTS VIEW (Same content) -->
+            <div id="view-announcements" class="view-section" style="display: none;">
+                <div class="news-grid">
+                    <!-- Announcements (Left) -->
+                    <div class="announcements-column">
+                        <h2 style="margin-bottom: 1.5rem;">Announcements</h2>
+
+                        <div class="news-card">
+                            <div class="news-image">
+                                <i class="fa-solid fa-flag fa-3x"></i>
+                            </div>
+                            <div class="news-content">
+                                <span class="news-date">February 12, 2026</span>
+                                <h3 style="color: var(--primary); margin-bottom: 0.8rem; font-size: 1.3rem;">Hero Client
+                                    Official Release</h3>
+                                <p
+                                    style="color: var(--text-dim); line-height: 1.6; font-size: 0.95rem; margin-bottom: 1rem;">
+                                    We are thrilled to announce the official release of Hero Client 1.0!
+                                    After months of rigorous testing, we have crafted the ultimate experience for you.
+                                    Enjoy unmatched performance, enhanced security, and a beautiful new interface.
+                                </p>
+                                <div style="display: flex; gap: 0.5rem;">
+                                    <span
+                                        style="background: rgba(255,215,0,0.1); color: var(--primary); padding: 0.2rem 0.6rem; border-radius: 4px; font-size: 0.75rem; border: 1px solid rgba(255,215,0,0.2);">#Release</span>
+                                    <span
+                                        style="background: rgba(255,255,255,0.05); color: var(--text-dim); padding: 0.2rem 0.6rem; border-radius: 4px; font-size: 0.75rem; border: 1px solid rgba(255,255,255,0.1);">#HeroClient</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Updates (Right) -->
+                    <div class="updates-column">
+                        <h2 style="margin-bottom: 1.5rem;">Latest Updates</h2>
+                        <div class="update-list">
+                            <div class="update-card">
+                                <div class="update-version">v1.0.0 <span class="update-date">Today</span></div>
+                                <p style="font-size: 0.85rem; color: var(--text-dim); margin-bottom: 0;">
+                                    <i class="fa-solid fa-check" style="color: var(--success); font-size: 0.7rem;"></i>
+                                    Initial Release<br>
+                                    <i class="fa-solid fa-plus" style="color: var(--primary); font-size: 0.7rem;"></i>
+                                    New Dashboard UI<br>
+                                    <i class="fa-solid fa-shield" style="color: var(--primary); font-size: 0.7rem;"></i>
+                                    Security Improvements
+                                </p>
+                            </div>
+                            <div class="update-card" style="border-left-color: var(--text-dim); opacity: 0.6;">
+                                <div class="update-version" style="color: var(--text-dim);">v0.9.5-beta <span
+                                        class="update-date">2 weeks ago</span></div>
+                                <p style="font-size: 0.85rem; color: var(--text-dim); margin-bottom: 0;">
+                                    <i class="fa-solid fa-wrench" style="font-size: 0.7rem;"></i> Bug fixes<br>
+                                    <i class="fa-solid fa-user" style="font-size: 0.7rem;"></i> Login system
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- WEB GUI VIEW -->
+            <div id="view-web-gui" class="view-section" style="display: none;">
+                <style>
+                    #webgui-container {
+                        height: calc(100vh - 200px);
+                        display: flex;
+                        flex-direction: column;
+                        background: var(--bg-dark);
+                        border-radius: 12px;
+                        overflow: hidden;
+                        border: 1px solid var(--glass-border);
+                    }
+
+                    .wg-topbar {
+                        height: 56px;
+                        background: var(--card-bg);
+                        border-bottom: 1px solid var(--glass-border);
+                        display: flex;
+                        align-items: center;
+                        justify-content: space-between;
+                        padding: 0 28px;
+                        flex-shrink: 0;
+                    }
+
+                    .wg-logo {
+                        font-size: 1.4rem;
+                        font-weight: 800;
+                        color: var(--text);
+                        letter-spacing: 2px;
+                        display: flex;
+                        align-items: center;
+                        gap: 10px;
+                    }
+
+                    .wg-logo::before {
+                        content: '';
+                        width: 8px;
+                        height: 8px;
+                        background: var(--primary);
+                        border-radius: 50%;
+                        box-shadow: 0 0 12px var(--primary);
+                    }
+
+                    .wg-status-pill {
+                        font-family: 'JetBrains Mono', monospace;
+                        font-size: 0.65rem;
+                        font-weight: 700;
+                        letter-spacing: 1.2px;
+                        padding: 6px 14px;
+                        border-radius: 6px;
+                        display: flex;
+                        align-items: center;
+                        gap: 7px;
+                        transition: all 0.3s;
+                        border: 1px solid var(--glass-border);
+                    }
+
+                    .wg-status-pill.offline {
+                        color: var(--iron);
+                        background: rgba(0, 0, 0, 0.3);
+                    }
+
+                    .wg-status-pill.online {
+                        color: var(--primary);
+                        background: var(--primary-glow);
+                        border-color: var(--secondary);
+                    }
+
+                    .wg-status-dot {
+                        width: 6px;
+                        height: 6px;
+                        border-radius: 50%;
+                        background: currentColor;
+                    }
+
+                    .wg-status-pill.online .wg-status-dot {
+                        animation: pulse 2s infinite;
+                    }
+
+                    .wg-layout {
+                        flex: 1;
+                        display: flex;
+                        overflow: hidden;
+                    }
+
+                    .wg-sidebar {
+                        width: 200px;
+                        background: var(--card-bg);
+                        border-right: 1px solid var(--glass-border);
+                        display: flex;
+                        flex-direction: column;
+                        flex-shrink: 0;
+                        padding: 20px 0;
+                    }
+
+                    .wg-nav-btn {
+                        display: flex;
+                        align-items: center;
+                        gap: 10px;
+                        padding: 10px 16px;
+                        font-size: 0.85rem;
+                        font-weight: 600;
+                        color: var(--iron-light);
+                        letter-spacing: 0.2px;
+                        transition: all 0.2s;
+                        border-left: 2px solid transparent;
+                        margin: 0 8px;
+                        border-radius: 6px;
+                        cursor: pointer;
+                    }
+
+                    .wg-nav-btn:hover {
+                        color: var(--text);
+                        background: rgba(255, 255, 255, 0.03);
+                    }
+
+                    .wg-nav-btn.active {
+                        color: var(--text);
+                        background: var(--primary-glow);
+                        border-left-color: var(--primary);
+                    }
+
+                    .wg-nav-count {
+                        margin-left: auto;
+                        font-family: 'JetBrains Mono', monospace;
+                        font-size: 0.6rem;
+                        font-weight: 600;
+                        color: var(--iron-dark);
+                        background: rgba(0, 0, 0, 0.3);
+                        border: 1px solid var(--glass-border);
+                        padding: 2px 7px;
+                        border-radius: 4px;
+                    }
+
+                    .wg-nav-btn.active .wg-nav-count {
+                        color: var(--primary);
+                        background: var(--primary-glow);
+                        border-color: var(--secondary);
+                    }
+
+                    .wg-main {
+                        flex: 1;
+                        display: flex;
+                        flex-direction: column;
+                        overflow: hidden;
+                    }
+
+                    .wg-main-header {
+                        padding: 20px 28px;
+                        display: flex;
+                        align-items: center;
+                        justify-content: space-between;
+                        flex-shrink: 0;
+                        border-bottom: 1px solid var(--glass-border);
+                        background: var(--card-bg);
+                    }
+
+                    .wg-section-name {
+                        font-size: 1.4rem;
+                        font-weight: 800;
+                        color: var(--text);
+                        letter-spacing: 0.5px;
+                        display: flex;
+                        align-items: center;
+                        gap: 12px;
+                    }
+
+                    .wg-modules-scroll {
+                        flex: 1;
+                        overflow-y: auto;
+                        padding: 24px;
+                    }
+
+                    .wg-module-grid {
+                        display: grid;
+                        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+                        gap: 14px;
+                    }
+
+                    .wg-module-card {
+                        background: var(--card-bg);
+                        border: 1px solid var(--glass-border);
+                        border-radius: 8px;
+                        overflow: hidden;
+                        transition: all 0.2s;
+                    }
+
+                    .wg-module-card:hover {
+                        border-color: var(--primary);
+                        transform: translateY(-1px);
+                    }
+
+                    .wg-module-card.enabled {
+                        border-color: var(--secondary);
+                        box-shadow: 0 0 0 1px var(--secondary);
+                    }
+
+                    .wg-card-head {
+                        display: flex;
+                        align-items: center;
+                        justify-content: space-between;
+                        padding: 14px 16px;
+                        background: rgba(0, 0, 0, 0.2);
+                        border-bottom: 1px solid var(--glass-border);
+                    }
+
+                    .wg-card-icon {
+                        width: 32px;
+                        height: 32px;
+                        background: rgba(0, 0, 0, 0.3);
+                        border: 1px solid var(--glass-border);
+                        border-radius: 6px;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        font-size: 0.85rem;
+                        color: var(--iron);
+                        transition: all 0.2s;
+                    }
+
+                    .wg-module-card.enabled .wg-card-icon {
+                        background: var(--primary-glow);
+                        border-color: var(--secondary);
+                        color: var(--primary);
+                    }
+
+                    .wg-card-name {
+                        font-size: 0.95rem;
+                        font-weight: 700;
+                        color: var(--text);
+                        letter-spacing: 0.3px;
+                    }
+
+                    .wg-kb-btn {
+                        font-family: 'JetBrains Mono', monospace;
+                        font-size: 0.6rem;
+                        font-weight: 700;
+                        letter-spacing: 0.8px;
+                        color: var(--iron);
+                        background: rgba(0, 0, 0, 0.3);
+                        border: 1px solid var(--glass-border);
+                        padding: 4px 10px;
+                        border-radius: 4px;
+                        min-width: 42px;
+                        text-align: center;
+                        cursor: pointer;
+                        transition: all 0.2s;
+                    }
+
+                    .wg-kb-btn:hover {
+                        border-color: var(--primary);
+                        color: var(--primary);
+                    }
+
+                    .wg-tog {
+                        position: relative;
+                        width: 40px;
+                        height: 22px;
+                        flex-shrink: 0;
+                    }
+
+                    .wg-tog input {
+                        opacity: 0;
+                        width: 0;
+                        height: 0;
+                    }
+
+                    .wg-tog-track {
+                        position: absolute;
+                        inset: 0;
+                        background: rgba(0, 0, 0, 0.3);
+                        border: 1px solid var(--glass-border);
+                        border-radius: 11px;
+                        cursor: pointer;
+                        transition: all 0.2s;
+                    }
+
+                    .wg-tog-thumb {
+                        position: absolute;
+                        width: 16px;
+                        height: 16px;
+                        background: var(--iron-dark);
+                        border-radius: 50%;
+                        top: 2px;
+                        left: 2px;
+                        transition: all 0.2s;
+                        pointer-events: none;
+                    }
+
+                    .wg-tog input:checked~.wg-tog-track {
+                        background: var(--secondary);
+                        border-color: var(--primary);
+                    }
+
+                    .wg-tog input:checked~.wg-tog-track .wg-tog-thumb {
+                        transform: translateX(18px);
+                        background: var(--primary);
+                    }
+
+                    .wg-card-body {
+                        padding: 16px;
+                        display: flex;
+                        flex-direction: column;
+                        gap: 12px;
+                    }
+
+                    .wg-s-row {
+                        display: flex;
+                        flex-direction: column;
+                        gap: 8px;
+                    }
+
+                    .wg-s-name {
+                        font-size: 0.75rem;
+                        font-weight: 600;
+                        color: var(--iron-light);
+                        letter-spacing: 0.2px;
+                        font-family: 'JetBrains Mono', monospace;
+                    }
+
+                    .wg-s-val {
+                        font-family: 'JetBrains Mono', monospace;
+                        font-size: 0.8rem;
+                        font-weight: 700;
+                        color: var(--primary);
+                    }
+
+                    .wg-s-track {
+                        position: relative;
+                        height: 5px;
+                        background: rgba(0, 0, 0, 0.3);
+                        border-radius: 3px;
+                        border: 1px solid var(--glass-border);
+                    }
+
+                    .wg-s-fill {
+                        position: absolute;
+                        height: 100%;
+                        background: var(--primary);
+                        border-radius: 2px;
+                        pointer-events: none;
+                    }
+
+                    .wg-empty {
+                        grid-column: 1/-1;
+                        display: flex;
+                        flex-direction: column;
+                        align-items: center;
+                        justify-content: center;
+                        height: 200px;
+                        gap: 12px;
+                    }
+
+                    .wg-empty i {
+                        font-size: 2rem;
+                        color: var(--iron);
+                    }
+
+                    .wg-empty span {
+                        font-family: 'JetBrains Mono', monospace;
+                        font-size: 0.7rem;
+                        letter-spacing: 1px;
+                        color: var(--iron-dark);
+                    }
+
+                    input[type=range].wg-slider {
+                        -webkit-appearance: none;
+                        position: absolute;
+                        width: 100%;
+                        height: 100%;
+                        top: 0;
+                        left: 0;
+                        background: transparent;
+                        outline: none;
+                        cursor: pointer;
+                        margin: 0;
+                    }
+
+                    input[type=range].wg-slider::-webkit-slider-thumb {
+                        -webkit-appearance: none;
+                        width: 14px;
+                        height: 14px;
+                        border-radius: 50%;
+                        background: var(--text);
+                        border: 2px solid var(--primary);
+                        margin-top: -5px;
+                        cursor: pointer;
+                    }
+                </style>
+                <div id="webgui-container">
+                    <div class="wg-topbar">
+                        <div class="wg-logo">HERO GUI</div>
+                        <div id="wg-status" class="wg-status-pill offline">
+                            <div class="wg-status-dot"></div>
+                            <span id="wg-status-text">OFFLINE</span>
+                        </div>
+                    </div>
+                    <div class="wg-layout">
+                        <div class="wg-sidebar">
+                            <div class="wg-nav-btn active" onclick="wgSetCategory('Combat',this)">
+                                <i class="fa-solid fa-crosshairs"></i> Combat
+                                <span class="wg-nav-count" id="wg-cnt-Combat">0</span>
+                            </div>
+                            <div class="wg-nav-btn" onclick="wgSetCategory('Visual',this)">
+                                <i class="fa-solid fa-eye"></i> Visual
+                                <span class="wg-nav-count" id="wg-cnt-Visual">0</span>
+                            </div>
+                            <div class="wg-nav-btn" onclick="wgSetCategory('Movement',this)">
+                                <i class="fa-solid fa-person-running"></i> Movement
+                                <span class="wg-nav-count" id="wg-cnt-Movement">0</span>
+                            </div>
+                            <div class="wg-nav-btn" onclick="wgSetCategory('Macros',this)">
+                                <i class="fa-solid fa-wrench"></i> Macros
+                                <span class="wg-nav-count" id="wg-cnt-Macros">0</span>
+                            </div>
+                        </div>
+                        <div class="wg-main">
+                            <div class="wg-main-header">
+                                <div class="wg-section-name">
+                                    <span id="wg-section-label">Combat</span>
+                                    <span
+                                        style="font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; color: var(--iron); font-weight: 500;"
+                                        id="wg-section-count">0 modules</span>
+                                </div>
+                            </div>
+                            <div class="wg-modules-scroll">
+                                <div id="wg-grid" class="wg-module-grid"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <script>
+                    (function () {
+                        // Get current user via AJAX (supports .html file being independent of PHP processing)
+                        let wgUser = null;
+
+                        // Fetch user session from simple PHP endpoint
+                        fetch('get_user.php')
+                            .then(response => response.json())
+                            .then(data => {
+                                if (data && data.username) {
+                                    wgUser = data.username;
+                                    console.log("[WS] User session found:", wgUser);
+                                    connect(); // Connect automatically
+                                } else {
+                                    console.warn("[WS] No PHP session found via AJAX.");
+                                    wgUser = "Unknown";
+                                    connect();
+                                }
+                            })
+                            .catch(err => {
+                                console.error("[WS] Error fetching session:", err);
+                                wgUser = "Unknown";
+                                connect();
+                            });
+
+                        const grid = document.getElementById('wg-grid');
+                        const statusEl = document.getElementById('wg-status');
+                        const statusTx = document.getElementById('wg-status-text');
+                        let socket, config = [], isConnected = false, currentCat = 'Combat';
+
+                        const CAT_MAP = { 'COMBAT': 'Combat', 'VISUAL': 'Visual', 'RENDER': 'Visual', 'MOVEMENT': 'Movement', 'MACROS': 'Macros', 'PLAYER': 'Macros', 'WORLD': 'Macros', 'MISC': 'Macros', 'EXPLOIT': 'Macros' };
+                        const ICONS = { 'TriggerBot': 'fa-crosshairs', 'AimAssist': 'fa-bullseye', 'KillAura': 'fa-bolt', 'AutoClicker': 'fa-hand-pointer', 'Velocity': 'fa-wind', 'Sprint': 'fa-person-running', 'Scaffold': 'fa-cubes', 'ESP': 'fa-eye', 'NoFall': 'fa-feather', 'Speed': 'fa-gauge-high', 'Reach': 'fa-arrows-left-right', 'Hitbox': 'fa-expand', 'KeyPearl': 'fa-regular fa-circle-dot', 'FastEXP': 'fa-solid fa-bottle-droplet', 'FastPot': 'fa-solid fa-flask', 'FastInventoryMove': 'fa-solid fa-box-open' };
+                        const GLFW = { 'KeyA': 65, 'KeyB': 66, 'KeyC': 67, 'KeyD': 68, 'KeyE': 69, 'KeyF': 70, 'KeyG': 71, 'KeyH': 72, 'KeyI': 73, 'KeyJ': 74, 'KeyK': 75, 'KeyL': 76, 'KeyM': 77, 'KeyN': 78, 'KeyO': 79, 'KeyP': 80, 'KeyQ': 81, 'KeyR': 82, 'KeyS': 83, 'KeyT': 84, 'KeyU': 85, 'KeyV': 86, 'KeyW': 87, 'KeyX': 88, 'KeyY': 89, 'KeyZ': 90, 'Digit0': 48, 'Digit1': 49, 'Digit2': 50, 'Digit3': 51, 'Digit4': 52, 'Digit5': 53, 'Digit6': 54, 'Digit7': 55, 'Digit8': 56, 'Digit9': 57, 'Space': 32, 'Escape': 256, 'Enter': 257, 'Tab': 258, 'Backspace': 259, 'CapsLock': 280, 'F1': 290, 'F2': 291, 'F3': 292, 'F4': 293, 'F5': 294, 'F6': 295, 'F7': 296, 'F8': 297, 'F9': 298, 'F10': 299, 'F11': 300, 'F12': 301, 'ShiftLeft': 340, 'ControlLeft': 341, 'AltLeft': 342, 'ShiftRight': 344, 'ControlRight': 345, 'AltRight': 346 };
+
+                        function keyName(c) { if (!c || c <= 0) return 'NONE'; for (const [n, v] of Object.entries(GLFW)) { if (v === c) return n.replace(/Key|Digit|Left|Right/g, '').toUpperCase(); } return 'K' + c; }
+                        function modCat(m) { return m.category ? (CAT_MAP[m.category.toUpperCase()] || 'Macros') : 'Macros'; }
+
+                        window.wgSetCategory = (cat, el) => {
+                            currentCat = cat;
+                            document.querySelectorAll('#view-web-gui .wg-nav-btn').forEach(n => n.classList.remove('active'));
+                            el.classList.add('active');
+                            document.getElementById('wg-section-label').textContent = cat;
+                            render();
+                        };
+
+                        function updateCounts() {
+                            ['Combat', 'Visual', 'Movement', 'Macros'].forEach(c => {
+                                const el = document.getElementById('wg-cnt-' + c);
+                                if (el) el.textContent = config.filter(m => modCat(m) === c).length;
+                            });
+                        }
+
+                        function connect() {
+                            // Relay Server Configuration
+                            // Force WS (HTTP) as VPS has no SSL certificate yet
+                            // User MUST allow 'Insecure Content' in browser settings
+                            const protocol = 'ws://';
+                            const domain = '102.129.137.93:8080'; // VPS IP Correcta
+
+                            try {
+                                socket = new WebSocket(protocol + domain);
+
+                                socket.onopen = () => {
+                                    isConnected = true;
+                                    statusEl.className = 'wg-status-pill online';
+                                    statusTx.textContent = 'CONNECTED';
+
+                                    console.log("[WS] Connected to Relay");
+                                    console.log("[WS] Identifying as User:", wgUser);
+
+                                    if (!wgUser) {
+                                        statusTx.textContent = 'NO USER';
+                                        statusEl.className = 'wg-status-pill offline';
+                                        alert("ERROR CRÍTICO: No se detectó usuario en la sesión PHP.\nAsegúrate de estar logueado en la web.");
+                                    }
+
+                                    // Identify this session
+                                    send({ type: 'identify', role: 'dashboard', user: wgUser || 'Unknown' });
+                                };
+
+                                socket.onclose = (e) => {
+                                    isConnected = false;
+                                    statusEl.className = 'wg-status-pill offline';
+                                    statusTx.textContent = 'OFFLINE';
+                                    console.log("[WS] Disconnected (Code: " + e.code + ")");
+                                    setTimeout(connect, 3000);
+                                };
+
+                                socket.onerror = (err) => {
+                                    console.error('WS Error:', err);
+                                    if (location.protocol === 'https:') {
+                                        console.warn("Posible bloqueo de contenido mixto o falta de SSL en puerto 8080.");
+                                    }
+                                };
+
+                                socket.onmessage = (e) => {
+                                    const d = JSON.parse(e.data);
+                                    if (d.type === 'state_update') sync(d.modules);
+                                };
+                            } catch (e) {
+                                console.error("WS Init Error:", e);
+                            }
+                        }
+
+                        function send(o) { if (isConnected) socket.send(JSON.stringify(o)); }
+
+                        function sync(mods) {
+                            config = mods;
+                            updateCounts();
+                            render();
+                        }
+
+                        function render() {
+                            grid.innerHTML = '';
+                            const list = currentCat === 'All' ? config : config.filter(m => modCat(m) === currentCat);
+                            document.getElementById('wg-section-count').textContent = list.length + ' module' + (list.length !== 1 ? 's' : '');
+                            if (!list.length) { grid.innerHTML = '<div class="wg-empty"><i class="fa-solid fa-box-open"></i><span>No modules here</span></div>'; return; }
+                            list.forEach(m => grid.appendChild(buildCard(m)));
+                        }
+
+                        function buildCard(mod) {
+                            const el = document.createElement('div');
+                            el.className = 'wg-module-card' + (mod.enabled ? ' enabled' : '');
+                            const icon = ICONS[mod.name] || 'fa-microchip';
+                            let body = '';
+                            mod.settings.filter(s => s.type !== 'bool').forEach(s => {
+                                if (s.type === 'range' || s.type === 'int' || s.type === 'double') {
+                                    const step = s.type === 'int' ? 1 : 0.1;
+                                    const pct = ((s.value - s.min) / (s.max - s.min)) * 100;
+                                    body += `<div class="wg-s-row"><div style="display:flex;justify-content:space-between;"><span class="wg-s-name">${s.name}</span><span class="wg-s-val">${s.value}</span></div><div class="wg-s-track"><div class="wg-s-fill" style="width:${pct}%"></div><input type="range" class="wg-slider" min="${s.min}" max="${s.max}" step="${step}" value="${s.value}" oninput="wgOnSlider(this,'${mod.name}','${s.name}','${s.type}')"></div></div>`;
+                                }
+                            });
+                            el.innerHTML = `
+                                <div class="wg-card-head">
+                                    <div style="display:flex;align-items:center;gap:12px;">
+                                        <div class="wg-card-icon"><i class="fa-solid ${icon}"></i></div>
+                                        <span class="wg-card-name">${mod.name}</span>
+                                    </div>
+                                    <div style="display:flex;align-items:center;gap:8px;">
+                                        <button class="wg-kb-btn">${keyName(mod.key_bind)}</button>
+                                        <label class="wg-tog">
+                                            <input type="checkbox" ${mod.enabled ? 'checked' : ''} onchange="wgToggleMod('${mod.name}',this.checked)">
+                                            <div class="wg-tog-track"><div class="wg-tog-thumb"></div></div>
+                                        </label>
+                                    </div>
+                                </div>
+                                ${body ? `<div class="wg-card-body">${body}</div>` : ''}
+                            `;
+                            return el;
+                        }
+
+                        window.wgToggleMod = (name, val) => {
+                            const m = config.find(x => x.name === name);
+                            if (m) m.enabled = val;
+                            const card = grid.querySelector(`.wg-module-card[data-mod="${name}"]`);
+                            if (card) card.classList.toggle('enabled', val);
+                            send({ type: 'toggle_module', module: name, enabled: val });
+                        };
+
+                        window.wgOnSlider = (inp, mod, name, type) => {
+                            const pct = ((inp.value - inp.min) / (inp.max - inp.min)) * 100;
+                            const fill = inp.previousElementSibling;
+                            if (fill) fill.style.width = pct + '%';
+                            const sv = inp.closest('.wg-s-row').querySelector('.wg-s-val');
+                            const num = type === 'int' ? parseInt(inp.value) : parseFloat(inp.value);
+                            if (sv) sv.textContent = num;
+                            const m = config.find(x => x.name === mod);
+                            if (m) { const s = m.settings.find(x => x.name === name); if (s) s.value = num; }
+                            send({ type: 'update_setting', module: mod, setting: name, value: num });
+                        };
+
+                        connect();
+                    })();
+                </script>
+            </div>
+
+            <!-- CONFIG BROWSER VIEW -->
+            <div id="view-config-browser" class="view-section" style="display: none;">
+                <h2 style="margin-bottom: 1.5rem;">Config Browser</h2>
+                <div class="content-card">
+                    <div style="text-align: center; padding: 2rem;">
+                        <i class="fa-solid fa-cloud-arrow-down fa-3x"
+                            style="color: var(--primary); margin-bottom: 1rem;"></i>
+                        <h3>Community Configs</h3>
+                        <p style="color: var(--text-dim);">Browse and download high-quality configs from other users.
+                        </p>
+                        <p style="margin-top: 1rem; font-style: italic; color: var(--text-dim);">Coming soon...</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- DOWNLOAD VIEW -->
+            <div id="view-download" class="view-section" style="display: none;">
+                <h2 style="margin-bottom: 1.5rem;">Download Hero</h2>
+                <div class="grid-container">
+                    <div class="content-card">
+                        <div class="card-header">
+                            <div class="card-icon"><i class="fa-brands fa-windows"></i></div>
+                        </div>
+                        <h3 class="card-title">Windows Client</h3>
+                        <p style="color: var(--text-dim); margin-bottom: 1.5rem;">Version 1.0.4 (Stable)</p>
+                        <button class="btn-action" onclick="alert('Starting download...')"
+                            style="width: 100%; text-align: center;">
+                            Download <i class="fa-solid fa-download"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <script src="js/main.js"></script>
+    <script>
+        // --- Core Functions (Embedded for Stability) ---
+        function switchView(viewId, element) {
+            document.querySelectorAll('.view-section').forEach(el => {
+                el.style.display = 'none';
+            });
+            const view = document.getElementById(`view-${viewId}`);
+            if (view) {
+                view.style.display = 'block';
+                if (typeof initScrollAnimations === 'function') initScrollAnimations();
+            } else {
+                console.error(`View not found: view-${viewId}`);
+            }
+            if (element) {
+                document.querySelectorAll('.menu-item').forEach(el => el.classList.remove('active'));
+                element.classList.add('active');
+            }
+        }
+
+        function updateLicenseUI(plan, expiry) {
+            const licenseStatus = document.getElementById('licenseStatus');
+            const sidebarPlan = document.getElementById('sidebarPlan');
+            const premiumMenu = document.getElementById('premiumMenu');
+            const avatar = document.getElementById('avatarInitials');
+
+            const safePlan = (plan || '').toLowerCase();
+            // Basic plan checking logic
+            const isPremium = safePlan.includes('premium') || safePlan.includes('lifetime') || safePlan.includes('pro') || safePlan.includes('vip') || safePlan.includes('month');
+
+            if (isPremium) {
+                // Update Sidebar
+                if (sidebarPlan) {
+                    sidebarPlan.textContent = plan || 'Hero User';
+                    sidebarPlan.style.color = 'var(--primary)';
+                }
+                if (premiumMenu) premiumMenu.style.display = 'flex';
+                if (avatar) {
+                    avatar.style.background = 'linear-gradient(135deg, var(--primary), var(--secondary))';
+                    avatar.style.color = 'black';
+                }
+
+                // Update Status Text
+                if (licenseStatus) {
+                    if (safePlan.includes('lifetime')) {
+                        licenseStatus.innerHTML = '<span style="color: var(--success)"><i class="fa-solid fa-infinity"></i> Lifetime Active</span>';
+                    } else if (expiry && expiry !== 'null') {
+                        // Calculate Time Remaining
+                        const expiryDate = new Date(expiry);
+                        const now = new Date();
+                        const diffTime = expiryDate - now;
+
+                        if (diffTime > 0) {
+                            const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+                            const diffHours = Math.floor((diffTime % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                            const diffMinutes = Math.floor((diffTime % (1000 * 60 * 60)) / (1000 * 60));
+
+                            licenseStatus.innerHTML = `
+                                <span style="color: var(--success); display: block; margin-bottom: 0.2rem;"><i class="fa-solid fa-check-circle"></i> Active</span>
+                                <span style="font-size: 0.8rem; color: var(--text-dim);">${diffDays}d ${diffHours}h ${diffMinutes}m remaining</span>
+                            `;
+                        } else {
+                            licenseStatus.innerHTML = '<span style="color: var(--danger)"><i class="fa-solid fa-times-circle"></i> Expired</span>';
+                        }
+                    } else {
+                        // Fallback if no expiry date but is premium
+                        licenseStatus.innerHTML = `<span style="color: var(--success)">${plan} Active</span>`;
+                    }
+                }
+            } else {
+                if (licenseStatus) licenseStatus.textContent = 'Free Version';
+                if (sidebarPlan) sidebarPlan.textContent = 'Free User';
+                if (premiumMenu) premiumMenu.style.display = 'none';
+            }
+        }
+
+        // Expose to window immediately
+        window.switchView = switchView;
+        window.updateLicenseUI = updateLicenseUI;
+
+        // --- Session Management ---
+        async function checkSession() {
+            const loggedIn = localStorage.getItem('hero_logged_in') || sessionStorage.getItem('hero_logged_in');
+            let username = localStorage.getItem('hero_username') || sessionStorage.getItem('hero_username');
+
+            if (!loggedIn || !username) {
+                window.location.href = 'login.html';
+                return;
+            }
+
+            try {
+                const response = await fetch('check_status.php', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ username: username })
+                });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+
+                const data = await response.json();
+
+                if (!data.valid) {
+                    // User deleted or invalid - Silent logout
+                    console.warn("Session invalid, logging out...");
+                    logout();
+                    return;
+                }
+
+                const storage = localStorage.getItem('hero_logged_in') ? localStorage : sessionStorage;
+                storage.setItem('hero_plan', data.plan || 'null');
+                storage.setItem('hero_expiry', data.expiry || 'null');
+                storage.setItem('hero_discord_username', data.discord_username || '');
+                storage.setItem('hero_discord_id', data.discord_id || '');
+                storage.setItem('hero_discord_avatar', data.discord_avatar || '');
+
+            } catch (e) {
+                console.error("Session check failed", e);
+                const licenseStatus = document.getElementById('licenseStatus');
+                if (licenseStatus) licenseStatus.textContent = "Offline / Connection Error";
+            }
+
+            const plan = localStorage.getItem('hero_plan') || sessionStorage.getItem('hero_plan');
+            const expiry = localStorage.getItem('hero_expiry') || sessionStorage.getItem('hero_expiry');
+
+            document.getElementById('welcomeUser').textContent = `Welcome back, ${username}`;
+            document.getElementById('headerUsername').textContent = username;
+
+            // Update Avatar (Discord > Initials)
+            // Update Avatar & Discord UI Variables
+            const discordId = localStorage.getItem('hero_discord_id') || sessionStorage.getItem('hero_discord_id');
+            const discordAvatar = localStorage.getItem('hero_discord_avatar') || sessionStorage.getItem('hero_discord_avatar');
+            const discordUsername = localStorage.getItem('hero_discord_username') || sessionStorage.getItem('hero_discord_username');
+
+            const avatarEl = document.getElementById('avatarInitials');
+
+            if (avatarEl) {
+                if (discordId && discordAvatar && discordAvatar !== 'null') {
+                    const avatarUrl = `https://cdn.discordapp.com/avatars/${discordId}/${discordAvatar}.png`;
+                    avatarEl.style.background = 'transparent';
+                    avatarEl.style.border = '2px solid var(--primary)'; // Add premium border
+                    avatarEl.style.boxShadow = '0 0 10px rgba(255, 215, 0, 0.3)'; // Add glow
+                    avatarEl.innerHTML = `<img src="${avatarUrl}" style="width: 100%; height: 100%; border-radius: 50%; object-fit: cover; display: block;">`;
+                } else {
+                    avatarEl.textContent = username.substring(0, 2).toUpperCase();
+                }
+            }
+
+            // Ensure updateLicenseUI is defined (from main.js)
+            if (typeof updateLicenseUI === 'function') {
+                updateLicenseUI(plan, expiry);
+            } else {
+                console.error("updateLicenseUI not found! Reloading main.js...");
+            }
+
+            // Update Discord UI
+
+
+            if (typeof updateDiscordUI === 'function') {
+                updateDiscordUI(username, discordUsername, discordAvatar, discordId);
+            }
+        }
+
+        // ... updateLicenseUI ...
+
+        // ... updateLicenseUI ...
+
+        function updateDiscordUI(currentUsername, discordUsername, discordAvatar, discordId) {
+            const container = document.getElementById('discordLinkContainer');
+            if (!container) return;
+
+            if (discordUsername && discordUsername !== 'null' && discordUsername !== '') {
+                // User IS linked
+                let avatarUrl = (discordAvatar && discordAvatar !== 'null' && discordId)
+                    ? `https://cdn.discordapp.com/avatars/${discordId}/${discordAvatar}.png`
+                    : 'https://cdn.discordapp.com/embed/avatars/0.png';
+
+                container.innerHTML = `
+                    <div style="background: rgba(88, 101, 242, 0.1); border: 1px solid #5865F2; padding: 1rem; border-radius: 12px; display: flex; align-items: center; gap: 1rem;">
+                        <img src="${avatarUrl}" style="width: 40px; height: 40px; border-radius: 50%;" alt="Discord Avatar">
+                        <div>
+                            <div style="color: #5865F2; font-weight: 700; font-size: 0.9rem;">Linked Discord</div>
+                            <div style="color: white; font-size: 0.85rem;">${discordUsername}</div>
+                        </div>
+                    </div>
+                `;
+            } else {
+                // User is NOT linked
+                container.innerHTML = `
+                    <a href="discord_auth.php?user=${currentUsername}" class="btn-action" 
+                       style="width: 100%; text-align: center; background: linear-gradient(135deg, #5865F2, #4752c4); border: none; color: white;">
+                       <i class="fa-solid fa-link"></i> Link Discord Account
+                    </a>
+                `;
+            }
+        }
+
+        function logout() {
+            const keys = ['hero_logged_in', 'hero_username', 'hero_plan', 'hero_expiry', 'hero_token'];
+            keys.forEach(key => {
+                localStorage.removeItem(key);
+                sessionStorage.removeItem(key);
+            });
+            window.location.href = 'login.html';
+        }
+
+        // --- Redeem Logic ---
+        async function redeemLicense() {
+            // ...
+            try {
+                // PHP Endpoint
+                const response = await fetch('redeem.php', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ username, key })
+                });
+
+                // ... logic ..
+            } catch (e) {
+                // ...
+            }
+        }
+
+        // ... switchView ...
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            const redeemBtn = document.getElementById('redeemBtn');
+            if (redeemBtn) {
+                redeemBtn.addEventListener('click', redeemLicense);
+                console.log("Redeem button hooked.");
+            } else {
+                console.error("Redeem button NOT found.");
+            }
+            checkSession();
+        });
+    </script>
+</body>
+
+</html>

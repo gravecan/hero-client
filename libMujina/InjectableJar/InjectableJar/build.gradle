@@ -1,0 +1,55 @@
+plugins {
+    id 'java'
+    id 'fabric-loom' version '1.7.4'
+}
+
+group = 'io.github.lefraudeur'
+version = '1.0.0'
+
+repositories {
+    mavenCentral()
+    maven {
+        name = 'Fabric'
+        url = 'https://maven.fabricmc.net/'
+    }
+}
+
+dependencies {
+    // Minecraft dependency - Loom will deobfuscate this
+    minecraft "com.mojang:minecraft:1.21.8"
+    
+    // Yarn mappings for readable names
+    mappings "net.fabricmc:yarn:1.21.8+build.1:v2"
+    
+    // ASM for bytecode manipulation
+    implementation files('libs/asm-9.6.jar')
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_21
+    targetCompatibility = JavaVersion.VERSION_21
+}
+
+sourceSets {
+    main {
+        java {
+            srcDirs = ['src']
+            exclude 'io/github/lefraudeur/web/1.21.8/**'
+        }
+    }
+}
+
+// Standard jar task configuration
+jar {
+    archiveBaseName = 'InjectableJar'
+    archiveVersion = '1.0.0'
+}
+
+// Ensure remapJar is configured to produce the final JAR
+remapJar {
+    archiveBaseName = 'InjectableJar'
+    archiveVersion = '1.0.0'
+}
+
+// Make build depend on remapJar (usually default)
+build.dependsOn remapJar

@@ -1,0 +1,17 @@
+{
+    "name": "hero-bot",
+    "version": "1.0.0",
+    "description": "Premium Discord Bot for Hero Client",
+    "main": "src/index.js",
+    "scripts": {
+        "start": "node src/index.js",
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "discord.js": "^14.14.1",
+        "dotenv": "^16.4.5"
+    }
+}
